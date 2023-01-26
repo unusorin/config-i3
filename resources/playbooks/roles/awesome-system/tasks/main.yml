@@ -1,0 +1,14 @@
+- name: Clone sources
+  git: repo=https://unusorin@bitbucket.org/unusorin/awesome-system.git dest=/opt/awesome-system version=master force=yes
+
+- name: Install dependencies
+  shell: composer install chdir=/opt/awesome-system
+
+- name: Build
+  shell: vendor/bin/box build chdir=/opt/awesome-system
+
+- name: Add execute permissions
+  shell: chmod +x build/awesome-system.phar chdir=/opt/awesome-system
+
+- name: Move to bin dir
+  shell: mv build/awesome-system.phar /usr/local/bin/awesome-system chdir=/opt/awesome-system

@@ -1,0 +1,8 @@
+- name: Clone sources
+  git: repo=https://github.com/Arcaena/i3lock-color dest=/opt/i3lock-color version=master
+
+- name: Build
+  shell: make chdir=/opt/i3lock-color
+
+- name: Install
+  shell: make install chdir=/opt/i3lock-color

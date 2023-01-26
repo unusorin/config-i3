@@ -1,0 +1,10 @@
+- name: Setup i3
+  remote_user: sorin
+  sudo: yes
+  hosts: localhost
+  roles:
+    - { role: i3 }
+    - { role: i3lock-fancy }
+    - { role: i3lock-color }
+    - { role: rofi }
+    - { role: awesome-system }

@@ -1,0 +1,23 @@
+- name: Clone sources
+  git: repo=https://github.com/DaveDavenport/rofi dest=/opt/rofi version=master
+
+- name: Generate build system
+  shell: autoreconf -i chdir=/opt/rofi
+
+- name: Create build directory
+  file: path=/opt/rofi/build state=directory
+
+- name: Configure
+  shell: ../configure chdir=/opt/rofi/build
+
+- name: Build
+  shell: make chdir=/opt/rofi/build
+
+- name: Install
+  shell: make install chdir=/opt/rofi/build
+
+- name: Add configuration
+  template: src=/home/{{ user }}/.config/i3/configs/rofi/.Xresources dest=/home/{{ user }}/.XResources
+
+- name: Load configuration
+  shell: xrdb -load /home/{{ user }}/.Xresources

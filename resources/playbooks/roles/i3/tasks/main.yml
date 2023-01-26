@@ -1,0 +1,41 @@
+- name: Install dependencies
+  apt: name={{ item }} state=latest
+  with_items:
+    - libxcb1-dev
+    - libxcb-keysyms1-dev
+    - libpango1.0-dev
+    - libxcb-util0-dev
+    - libxcb-icccm4-dev
+    - libyajl-dev
+    - libstartup-notification0-dev
+    - libxcb-randr0-dev
+    - libev-dev
+    - libxcb-cursor-dev
+    - libxcb-xinerama0-dev
+    - libxcb-xkb-dev
+    - libxkbcommon-dev
+    - libxkbcommon-x11-dev
+    - lxappearance
+    - gtk-chtheme
+    - qt4-qtconfig
+
+- name: Install additional software repos
+  apt_repository: repo='{{ item }}' state=present update_cache=yes
+  with_items:
+      - ppa:vincent-c/conky
+      - ppa:lookit/testing
+
+- name: Install additional software
+  apt: name={{ item }} state=latest
+  with_items:
+      - conky
+      - lookit
+
+- name: Clone sources
+  git: repo=https://github.com/Airblader/i3 dest=/opt/i3 version=gaps
+
+- name: Build
+  shell: make chdir=/opt/i3
+
+- name: Install
+  shell: make install chdir=/opt/i3

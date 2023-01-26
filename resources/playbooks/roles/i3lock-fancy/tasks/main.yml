@@ -1,0 +1,14 @@
+- name: Install dependencies
+  apt: name={{ item }} state=latest
+  with_items:
+      - realpath
+      - imagemagick
+      - scrot
+      - util-linux
+      - git
+
+- name: Clone repo
+  git: repo=https://github.com/meskarune/i3lock-fancy dest=/opt/i3lock-fancy version=dualmonitors
+
+- name: Symlink executable
+  file: src=/opt/i3lock-fancy/lock dest=/usr/local/bin/i3lock-fancy state=link
